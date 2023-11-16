@@ -1,0 +1,24 @@
+package com.example.SampleKakaoMap;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class MainController {
+
+  @GetMapping("/")
+  public String root() {
+    return "redirect:/main";
+  }
+
+  @GetMapping("/main")
+  public String main() {
+    return "main";
+  }
+
+  @GetMapping("/regist")
+  public String regist() {
+    return "regist";
+  }
+
+}
