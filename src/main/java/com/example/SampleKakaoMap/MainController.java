@@ -16,9 +16,9 @@ public class MainController {
     return "main";
   }
 
-  @GetMapping("/regist")
+  @GetMapping("/map")
   public String regist() {
-    return "regist";
+    return "map";
   }
 
 }
