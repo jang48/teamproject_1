@@ -18,7 +18,7 @@ public class PlaceCustController {
     private final PlaceCustRepository placeCustRepository;
 
     @GetMapping("/map")
-    public String regist() {
+    public String map() {
         return "map";
     }
 
@@ -35,7 +35,11 @@ public class PlaceCustController {
             model.addAttribute("message", "이미 등록된 위치입니다.");
         }
 
-
-        return "map";
+        return "redirect:/place/map";
     }
+    @GetMapping("/map/regist")
+    public String regist() {
+        return "mapregist";
+    }
+
 }

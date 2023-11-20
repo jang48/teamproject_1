@@ -26,7 +26,6 @@ a{
     overflow-y : auto;
 }
 .mapside {
-    background : bisque;
     height : 800px;
 }
 
@@ -50,4 +49,20 @@ a{
     border-radius: 10px;
     width : 200px;
     height : 30px;
+}
+
+.regist_array{
+    background : yellow;
+    width : 80%;
+    height : 80%;
+    display : flex;
+    margin-left : 10%;
+}
+
+.regist_form{
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,.87);
+
+    width : 80%;
+    height : 80%;
 }

@@ -16,9 +16,5 @@ public class MainController {
     return "main";
   }
 
-  @GetMapping("/map")
-  public String regist() {
-    return "map";
-  }
 
 }
