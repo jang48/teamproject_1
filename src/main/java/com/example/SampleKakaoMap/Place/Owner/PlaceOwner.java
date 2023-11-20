@@ -1,14 +1,14 @@
-package com.example.SampleKakaoMap;
+package com.example.SampleKakaoMap.Place.Owner;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.Entity;
+
 @Entity
 @Getter
 @Setter
-public class Place {
+public class PlaceOwner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

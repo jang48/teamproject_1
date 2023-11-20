@@ -18,9 +18,9 @@ a{
   display : flex;
 }
 
-.locationlist {
+.locationList {
     background : azure;
-    height : 600px;
+    height : 659px;
     width : 410px;
     border-radius: 10px;
     overflow-y : auto;
@@ -44,7 +44,7 @@ a{
   word-break:break-all;
 }
 
-.regist_btn{
+.registBtn{
     background : #289AFF;
     color : white;
     border-radius: 10px;
