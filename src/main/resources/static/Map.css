@@ -183,10 +183,36 @@ padding: 0px;
     display: block;
 }
 
-#wrapper.test {
-   background: rgba(0, 0, 0, 0.8);
-   z-index: 100;
-   position: fixed;
+.locationList {
+    background : azure;
+    height : 659px;
+    width : 410px;
+    border-radius: 10px;
+    overflow-y : auto;
+}
+
+.mapside {
+    height : 800px;
+}
+
+.mb-3 {
+    border: 1px solid rgba(0,0,0,.87);
+    border-radius: 10px;
+}
+
+.form-control{
+    height : 30px;
+    font-size : 15px;
+    margin : 0px;
+    overflow : auto;
+    word-break:break-all;
+}
+.registBtn{
+    background : #289AFF;
+    color : white;
+    border-radius: 10px;
+    width : 200px;
+    height : 30px;
 }
 
 </style>

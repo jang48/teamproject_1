@@ -19,7 +19,7 @@ public class PlaceCustController {
 
     @GetMapping("/map")
     public String map() {
-        return "map";
+        return "Map";
     }
 
     @PostMapping("/map/add")
@@ -35,11 +35,11 @@ public class PlaceCustController {
             model.addAttribute("message", "이미 등록된 위치입니다.");
         }
 
-        return "redirect:/place/map";
+        return "redirect:/place/Map";
     }
     @GetMapping("/map/regist")
     public String regist() {
-        return "mapregist";
+        return "MapRegist";
     }
 
 }
