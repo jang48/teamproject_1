@@ -11,7 +11,7 @@
     <div class="time_modal">
         <input type="text" class="regist_text"  id="popup_open_btn" placeholder="매장의 영업시간, 휴무일을 작성해주세요.">
 
-        <div id="time_modal" style="overflow : auto; max-height : 51%;">
+        <div id="time_modal" style="overflow : auto; max-height : 61%;">
             <div class="time_array" style="margin : 15px;">
                 <form id="targetCreateForm" name="targetCreateForm" method="post">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -21,103 +21,31 @@
                     </button>
                     <div th:if="${message != null}" th:text="${message}" class="message" style="color : red; font-weight : bold; margin-top : 2px;"></div>
                     <div class="time_table" style="text-align : center;" >
-                        <div style="margin-top : 17px;">
-                            <span type="text"  value="monday" style="font-size : 16px; font-weight : bold;">MON</span>
-                            <div style="margin-bottom : 8px;">
-                                <input type="radio" name ="mon" onclick="open_1()"/>
-                                <span>영업일</span>
-                                <input type="radio" name ="mon" onclick="close_1()"/>
-                                <span>휴무일</span>
-                                <div class="time_click" id="timeClickContainer_1" style="display : none;" >
-                                    <input class="time" id="monday_str_time" type="time">
-                                    ~
-                                    <input class="time" id="monday_end_time" type="time">
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <span type="text"  value="tuesday" style="font-size : 16px; font-weight : bold;">TUE</span>
-                            <div style="margin-bottom : 8px;">
-                                <input type="radio" name ="tue" onclick="open_2()"/>
-                                <span>영업일</span>
-                                <input type="radio" name ="tue" onclick="close_2()"/>
-                                <span>휴무일</span>
-                                <div class="time_click" id="timeClickContainer_2" style="display : none;" >
-                                    <input class="time" id="tuesday_str_time" type="time">
-                                    ~
-                                    <input class="time" id="tuesday_end_time" type="time">
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <span type="text"  value="wedday" style="font-size : 16px; font-weight : bold;">WED</span>
-                            <div style="margin-bottom : 8px;">
-                                <input type="radio" name ="wed" onclick="open_3()"/>
-                                <span>영업일</span>
-                                <input type="radio" name ="wed" onclick="close_3()"/>
-                                <span>휴무일</span>
-                                <div class="time_click" id="timeClickContainer_3" style="display : none;" >
-                                    <input class="time" id="wedday_str_time" type="time">
-                                    ~
-                                    <input class="time" id="wedday_end_time" type="time">
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <span type="text"  value="thuday" style="font-size : 16px; font-weight : bold;">THU</span>
-                            <div style="margin-bottom : 8px;">
-                                <input type="radio" name ="thu" onclick="open_4()"/>
-                                <span>영업일</span>
-                                <input type="radio" name ="thu" onclick="close_4()"/>
-                                <span>휴무일</span>
-                                <div class="time_click" id="timeClickContainer_4" style="display : none;" >
-                                    <input class="time" id="thuday_str_time" type="time">
-                                    ~
-                                    <input class="time" id="thuday_end_time" type="time">
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <span type="text"  value="friday" style="font-size : 16px; font-weight : bold;">FRI</span>
-                            <div style="margin-bottom : 8px;">
-                                <input type="radio" name ="fri" onclick="open_5()"/>
-                                <span>영업일</span>
-                                <input type="radio" name ="fri" onclick="close_5()"/>
-                                <span>휴무일</span>
-                                <div class="time_click" id="timeClickContainer_5" style="display : none;" >
-                                    <input class="time" id="friday_str_time" type="time">
-                                    ~
-                                    <input class="time" id="friday_end_time" type="time">
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <span type="text"  value="satday" style="font-size : 16px; font-weight : bold;">SAT</span>
-                            <div style="margin-bottom : 8px;">
-                                <input type="radio" name ="sat" onclick="open_6()"/>
-                                <span>영업일</span>
-                                <input type="radio" name ="sat" onclick="close_6()"/>
-                                <span>휴무일</span>
-                                <div class="time_click" id="timeClickContainer_6" style="display : none;" >
-                                    <input class="time" id="satday_str_time" type="time">
-                                    ~
-                                    <input class="time" id="satday_end_time" type="time">
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <span type="text"  value="sunday" style="font-size : 16px; font-weight : bold;">SUN</span>
-                            <div>
-                                <input type="radio" name ="sun" onclick="open_7()"/>
-                                <span>영업일</span>
-                                <input type="radio" name ="sun" onclick="close_7()"/>
-                                <span>휴무일</span>
-                                <div class="time_click" id="timeClickContainer_7" style="display : none;" >
-                                    <input class="time" id="sunday_str_time" type="time">
-                                    ~
-                                    <input class="time" id="sunday_end_time" type="time">
-                                </div>
-                            </div>
+                        <div style="margin-top: 17px;">
+                            <script>
+                                var daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+                            </script>
+
+                            <script>
+                                for (var i = 0; i < daysOfWeek.length; i++) {
+                                    document.write(`
+                                        <div>
+                                            <span type="text" data-value="${daysOfWeek[i]}" id="${daysOfWeek[i]}"style="font-size: 16px; font-weight: bold;">${daysOfWeek[i].toUpperCase()}</span>
+                                            <div style="margin-bottom: 8px;">
+                                                <input type="radio" name="${daysOfWeek[i]}" onclick="open_${i + 1}()"/>
+                                                <span>영업일</span>
+                                                <input type="radio" name="${daysOfWeek[i]}" onclick="close_${i + 1}()"/>
+                                                <span>휴무일</span>
+                                                <div class="time_click" id="timeClickContainer_${i + 1}" style="display: none;">
+                                                    <input class="time" id="${daysOfWeek[i]}_str_time" type="time">
+                                                    ~
+                                                    <input class="time" id="${daysOfWeek[i]}_end_time" type="time">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `);
+                                }
+                            </script>
                         </div>
                     </div>
                     <div style="margin-top : 5%;">
@@ -132,8 +60,12 @@
 <script>
 
     function registPlace(){
+    var z = document.getElementById("monday").dataset.value;
     var x = document.getElementById("monday_str_time").value;
+    var y = document.getElementById("monday_end_time").value;
+        console.log(z);
         console.log(x);
+        console.log(y);
     }
 
     var timeClickContainer = document.getElementById("timeClickContainer_1");
