@@ -37,9 +37,6 @@ public class PlaceCustController {
 
         return "redirect:/place/Map";
     }
-    @GetMapping("/map/regist")
-    public String regist() {
-        return "MapRegist";
-    }
+
 
 }

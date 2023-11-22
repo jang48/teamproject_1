@@ -1,5 +1,6 @@
-package com.example.SampleKakaoMap.Place.Owner;
+package com.example.SampleKakaoMap.Place.Operate;
 
+import com.example.SampleKakaoMap.Place.Owner.PlaceOwner;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
