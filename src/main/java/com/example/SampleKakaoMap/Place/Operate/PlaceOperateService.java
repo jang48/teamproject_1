@@ -20,4 +20,9 @@ public class PlaceOperateService {
             this.placeOperateRepository.save(placeOperate);
         }
     }
+
+    public List<PlaceOperate>  getAllOperateList(Integer PlaceOwnerId){
+        return this.placeOperateRepository.findByPlaceOwner_Id(PlaceOwnerId);
+    }
+
 }

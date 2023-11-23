@@ -22,7 +22,9 @@ public class PlaceController {
     private final OperateDto operateDto2;
 
     @GetMapping("/map/regist")
-    public String regist() {
+    public String regist(Model model) {
+        List<PlaceOperate> placeOperateList = this.placeOperateService.getAllOperateList(null);
+        model.addAttribute("placeOperateList", placeOperateList);
         return "MapRegist";
     }
     @GetMapping("/map/regist/owner")
@@ -34,6 +36,7 @@ public class PlaceController {
     public String operatetime(@ModelAttribute OperateDto operateDto){
         List<OperateDto> operateDtoList = operateDto.getOperateDtoList();
         this.placeOperateService.saveoperate(operateDtoList);
+
         return "redirect:/place/map/regist";
     }
 }

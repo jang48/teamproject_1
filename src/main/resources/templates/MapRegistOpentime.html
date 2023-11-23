@@ -9,6 +9,14 @@
 <nav th:fragment="navbarFragment" >
 <div>
     <div class="time_modal">
+<!--        <div th:each="OperateList, iterStat : ${placeOperateList}">-->
+<!--            <div th:text="${OperateList.openTime + ', ' + OperateList.closeTime}"></div>-->
+<!--            <input type="hidden" name="day" th:id="'day_' + ${iterStat.index}" th:value="${OperateList.day}">-->
+<!--            <input type="hidden" name="openTime" th:id="'openTime_' + ${iterStat.index}" th:value="${OperateList.openTime}">-->
+<!--            <input type="hidden" name="closeTime" th:id="'closeTime_' + ${iterStat.index}" th:value="${OperateList.closeTime}">-->
+<!--&lt;!&ndash;            <input type="button" th:data-iter-index="${iterStat.index}" onclick="articleMessage(this)" style="background : yellow;">&ndash;&gt;-->
+<!--        </div>-->
+
         <input type="text" class="regist_text"  id="popup_open_btn" placeholder="매장의 영업시간, 휴무일을 작성해주세요.">
 
         <div id="time_modal" style="overflow : auto; max-height : 61%;">
@@ -26,21 +34,24 @@
                                 var daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
                             </script>
 
-                            <script>
+                            <script th:inline="javascript">
+                                var operateList = [[${placeOperateList}]];
+
                                 for (var i = 0; i < daysOfWeek.length; i++) {
+
                                     document.write(`
                                         <div>
                                             <input type="hidden" name="operateDtoList[${i}].day" value="${daysOfWeek[i]}">
                                             <span type="text" data-value="${daysOfWeek[i]}" id="${daysOfWeek[i]}"style="font-size: 16px; font-weight: bold;">${daysOfWeek[i].toUpperCase()}</span>
                                             <div style="margin-bottom: 8px;">
-                                                <input type="radio" name="${daysOfWeek[i]}" onclick="open_${i + 1}()"/>
+                                                <input type="radio" name="${daysOfWeek[i]}" onclick="toggleDayContainer(${i+1})"/>
                                                 <span>영업일</span>
-                                                <input type="radio" name="${daysOfWeek[i]}" onclick="close_${i + 1}()"/>
+                                                <input type="radio" name="${daysOfWeek[i]}" onclick="toggleDayContainer(${i+1})"/>
                                                 <span>휴무일</span>
                                                 <div class="time_click" id="timeClickContainer_${i + 1}" style="display: none;">
-                                                    <input class="time" name = "operateDtoList[${i}].openTime" id="${daysOfWeek[i]}_str_time" type="time">
+                                                    <input class="time" name = "operateDtoList[${i}].openTime" id="${daysOfWeek[i]}_str_time" type="time" value="${operateList[i].openTime}">
                                                     ~
-                                                    <input class="time" name = "operateDtoList[${i}].closeTime" id="${daysOfWeek[i]}_end_time" type="time">
+                                                    <input class="time" name = "operateDtoList[${i}].closeTime" id="${daysOfWeek[i]}_end_time" type="time" value="${operateList[i].closeTime}">
                                                 </div>
                                             </div>
                                         </div>
@@ -63,17 +74,26 @@
         this.document.getElementById("targetCreateForm").submit();
     };
 
-    function open_7(){
-    var timeClickContainer7 = document.getElementById("timeClickContainer_7");
-        timeClickContainer7.style.display = "block";
+    function toggleDayContainer(num) {
+        var timeClickContainer = document.getElementById("timeClickContainer_" + num);
+        var str_time = document.getElementById(daysOfWeek[num - 1] + "_str_time");
+        var end_time = document.getElementById(daysOfWeek[num - 1] + "_end_time");
+
+        if (timeClickContainer.style.display === "block") {
+            closeDayContainer(timeClickContainer, str_time, end_time);
+        } else {
+            openDayContainer(timeClickContainer);
+        }
     }
-    function close_7(){
-        var timeClickContainer7 = document.getElementById("timeClickContainer_7");
-        var str_time7 = document.getElementById("sunday_str_time");
-        var end_time7 = document.getElementById("sunday_end_time");
-        timeClickContainer7.style.display = "none";
-        str_time7.value = "";
-        end_time7.value = "";
+
+    function openDayContainer(container) {
+        container.style.display = "block";
+    }
+
+    function closeDayContainer(container, str_time, end_time) {
+        container.style.display = "none";
+        str_time.value = "";
+        end_time.value = "";
     }
 
 
@@ -133,7 +153,22 @@
         // 모달창 띄우기
         modal('time_modal');
     });
+
 </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        function articleMessage(input) {
+        console.log('start');
+        var index = input.getAttribute('data-iter-index');
+        console.log(index);
+        var a = $('#day_' + index).val();
+<!--        var a1 = $('#openTime_' + index).val();-->
+        var test = $('#openTime_0').text();
+        console.log($('#openTime_0'));
+        console.log('end');
+}
+
+    </script>
 </nav>
 </body>
 </html>
