@@ -21,7 +21,7 @@ public class PlaceMenu {
 
     private String menuName;      // 메뉴 이름
 
-    private Long menuPrice;       // 메뉴 가격
+    private String menuPrice;       // 메뉴 가격
 
     @ManyToOne
     private PlaceOwner placeOwner;

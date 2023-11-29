@@ -12,11 +12,11 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="RegistArray">
-        <a style="font-size : 30px; font-weight : bold; top : 10px;">신규 등록</a>
-        <div class="RegistForm" style="margin-top : 50px;">
-            <div class="RegistTitle" style="margin : 50px;">
-                <a style="font-size : 25px; font-weight : bold; margin-bottom : 10px;">기본 정보</a> <a class="regist_sub" style="color : red; font-weight : bold;"> *필수 </a>
+    <a style="font-size : 30px; font-weight : bold; margin-left : 50px;">신규 등록</a>
+    <div class="RegistArray" style="display :flex ; justify-content: center; width : 90%;">
+        <div class="RegistForm" style="width : 40%;">
+            <div class="RegistTitle" style="margin-top : 20px; margin-bottom : 20px;">
+                <a style="font-size : 25px; font-weight : bold;">기본 정보</a> <a class="regist_sub" style="color : red; font-weight : bold;"> *필수 </a>
             </div>
             <form id="info" name="info">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
@@ -26,13 +26,13 @@
                            placeholder="매장명을 작성해주세요." th:value="${placeOwner?.store == null ? '' : placeOwner.store}" >
                     <label class="RegistLabel"> 주소 </label>
                     <div>
-                        <input type="text" id="address" name="address" style="width : 55%; padding : 6px; margin:5px;"
+                        <input type="text" id="address" name="address" style="width : 45%; padding : 3px; margin:5px;"
                                placeholder="주소" th:value="${placeOwner?.storeAddress == null ? '' : placeOwner.storeAddress.split('/')[0]}" readonly>
                         <input type="text" id="detailAddress" name="detailAddress"
-                               style="width : 23%; padding : 6px; margin:5px;" placeholder="상세주소" th:value="${placeOwner?.storeAddress == null ? '' : placeOwner.storeAddress.split('/').length > 1 ? placeOwner.storeAddress.split('/')[1] : ''}">
-                        <input type="button" style="width : 17%; padding : 6px;" onclick="address_execDaumPostcode()"
+                               style="width : 23%; padding : 3px; margin:5px;" placeholder="상세주소" th:value="${placeOwner?.storeAddress == null ? '' : placeOwner.storeAddress.split('/').length > 1 ? placeOwner.storeAddress.split('/')[1] : ''}">
+                        <input type="button" style="width : 17%; padding : 3px;" onclick="address_execDaumPostcode()"
                                value="주소 검색"><br>
-                        <div id="map" style="width:98%;height:300px;margin-top:10px; margin-bottom:10px;"></div>
+                        <div id="map" style="width:90%;height:300px;margin-top:10px; margin-bottom:10px;"></div>
 
                         <input type="hidden" id="latitude" name="latitude">
                         <input type="hidden" id="longitude" name="longitude" >
@@ -55,14 +55,14 @@
                             <span>술집</span>
                         </label>
                     </div>
-                    <button class="BasicInfoSave" id="BasicInfoSave" type="submit" style="margin-left : 85%;"
-                            onclick="doJoin(document.getElementById('info'))">저장
+                    <button class="BasicInfoSave" id="BasicInfoSave" type="submit" style="margin-left : 75%;"
+                            onclick="doSave(document.getElementById('info'))">저장
                     </button>
-                    <input type="hidden" id="placeOwnerId" th:value="${placeOwner?.Id == null ? '' : placeOwner.Id}">
                 </div>
             </form>
-
-            <div class="RegistTitle" style="margin : 50px;">
+        </div>
+        <div class="addRegist">
+            <div class="RegistTitle" style="margin-top : 20px; margin-bottom : 20px;">
                 <a style="font-size : 25px; font-weight : bold; margin-bottom : 10px;">추가 정보</a>
             </div>
             <div class="RegistAddContent">
@@ -71,19 +71,66 @@
                 <label class="RegistLabel"> 웹사이트 </label>
                 <input type="text" class="RegistText" id="webSite" placeholder="웹사이트주소를 작성해주세요.">
                 <label class="RegistLabel"> 메뉴 </label>
-                <form id="menu" name="frm" style="display : flex;" method="post" action="/place/map/regist/action"
+                <form id="menu" name="frm" style="display : flex; flex-direction : row;" method="post" action="/place/map/regist/menu"
                       enctype="multipart/form-data">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <input type="hidden" id="placeOwnerId" name="placeOwnerId" th:value="${placeOwner?.Id == null ? '' : placeOwner.Id}">
                     <img id="preview" src="/noimage.png" style="max-width: 150px; max-height: 150px;">
-                    <div class="MenuDet" style="margin-left : 20px; margin-top : 12px;">
+                    <div class="MenuDet" name ="MenuDet" style="margin-left : 20px; margin-top : 12px;">
                         <div style="margin : 7px;">
                             <label class="MenuLabel"> 메뉴 이름 </label>
-                            <input type="text" id="name" class="MenuText"
+                            <input type="text" id="name" class="MenuText" name="name"
                                    style="margin-top : -16px; margin-left : 10px;" placeholder="메뉴 이름을 작성해주세요.">
                         </div>
                         <div style="margin : 7px;">
                             <label class="MenuLabel"> 메뉴 가격 </label>
-                            <input type="text" id="price" class="MenuText" onkeyup="inputNumberFormat(this)"
+                            <input type="text" id="price" class="MenuText" name="price" onkeyup="inputNumberFormat(this)"
+                                   style="margin-top : -16px; margin-left : 10px;" maxlength="8" placeholder="메뉴 가격을 작성해주세요.">
+                        </div>
+                        <div>
+                            <input type="file" name="file" style="width : 72%;"
+                                   accept="image/png, image/jpeg, image/jpg" onchange="previewImage(this)">
+                            <Button type="submit" class="MenuInfoSave" >메뉴 등록</Button>
+                        </div>
+                    </div>
+                </form>
+                <form id="menu_2"  name="frm" style="display : flex; flex-direction : row;" method="post" action="/place/map/regist/menu"
+                      enctype="multipart/form-data">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <input type="hidden" id="placeOwnerId_2" th:value="${placeOwner?.Id == null ? '' : placeOwner.Id}">
+                    <img id="preview_2" src="/noimage.png" style="max-width: 150px; max-height: 150px;">
+                    <div class="MenuDet" style="margin-left : 20px; margin-top : 12px;">
+                        <div style="margin : 7px;">
+                            <label class="MenuLabel"> 메뉴 이름 </label>
+                            <input type="text" id="name_2" class="MenuText" name="name"
+                                   style="margin-top : -16px; margin-left : 10px;" placeholder="메뉴 이름을 작성해주세요.">
+                        </div>
+                        <div style="margin : 7px;">
+                            <label class="MenuLabel"> 메뉴 가격 </label>
+                            <input type="text" id="price_2" class="MenuText" name="price" onkeyup="inputNumberFormat(this)"
+                                   style="margin-top : -16px; margin-left : 10px;" maxlength="8" placeholder="메뉴 가격을 작성해주세요.">
+                        </div>
+                        <div>
+                            <input type="file" name="file" style="width : 72%;"
+                                   accept="image/png, image/jpeg, image/jpg" onchange="previewImage(this)">
+                            <Button type="submit" class="MenuInfoSave">메뉴 등록</Button>
+                        </div>
+                    </div>
+                </form>
+                <form id="menu_3" name="frm" style="display : flex; flex-direction : row;" method="post" action="/place/map/regist/menu"
+                      enctype="multipart/form-data">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <input type="hidden" id="placeOwnerId_3" th:value="${placeOwner?.Id == null ? '' : placeOwner.Id}">
+                    <img id="preview_3" src="/noimage.png" style="max-width: 150px; max-height: 150px;">
+                    <div class="MenuDet" style="margin-left : 20px; margin-top : 12px;">
+                        <div style="margin : 7px;">
+                            <label class="MenuLabel"> 메뉴 이름 </label>
+                            <input type="text" id="name_3" class="MenuText" name="name"
+                                   style="margin-top : -16px; margin-left : 10px;" placeholder="메뉴 이름을 작성해주세요.">
+                        </div>
+                        <div style="margin : 7px;">
+                            <label class="MenuLabel"> 메뉴 가격 </label>
+                            <input type="text" id="price_3" class="MenuText" name="price" onkeyup="inputNumberFormat(this)"
                                    style="margin-top : -16px; margin-left : 10px;" maxlength="8" placeholder="메뉴 가격을 작성해주세요.">
                         </div>
                         <div>
@@ -96,13 +143,12 @@
             </div>
         </div>
     </div>
-
     <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f6119cdfa6fe0122000dfaa0c837e0e&libraries=services"></script>
     <!-- 카카오지도 키워드 검색  -->
     <script th:inline="javascript">
 
-        function doJoin(form){
+        function doSave(form){
            form.action = "/place/map/regist/info/save";
            form.method = "post";
            form.submit();
@@ -138,6 +184,8 @@
               alert("사진을 선택해주세요.");
           }
       }
+
+
       ////////////////////////////////////////////////  함수 구현  ////////////////////////////////////////////////
                 var autoHypenPhone = function(str){
                     str = str.replace(/[^0-9]/g, '');

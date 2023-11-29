@@ -16,7 +16,7 @@ import java.io.IOException;
 public class PlaceMenuService {
     private final PlaceMenuRepository placeMenuRepository;
 
-    public void savefile(String origFileName, String filePath, PlaceOwner placeOwner, String name, Long price){
+    public void savefile(String origFileName, String filePath, PlaceOwner placeOwner, String name, String price){
         PlaceMenu placeMenu = new PlaceMenu();
         placeMenu.setOrigFileName(origFileName);
         placeMenu.setFilePath(filePath);
