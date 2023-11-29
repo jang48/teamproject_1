@@ -10,9 +10,9 @@ import java.util.List;
 @Setter
 @Component
 public class OperateDto {
+    private Long id;
     private String day;
     private String openTime;
     private String closeTime;
     private List<OperateDto> operateDtoList;
-
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 public class PlaceOperate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String day;         // 요일
 
@@ -21,4 +21,13 @@ public class PlaceOperate {
 
     @ManyToOne
     private PlaceOwner placeOwner;
+
+    public OperateDto convertDto() {
+        OperateDto operateDto = new OperateDto();
+        operateDto.setDay(this.day);
+        operateDto.setOpenTime(this.openTime);
+        operateDto.setCloseTime(this.closeTime);
+
+        return operateDto;
+    }
 }
