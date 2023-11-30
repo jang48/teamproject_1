@@ -4,12 +4,9 @@ package com.example.SampleKakaoMap.Place.Menu;
 import com.example.SampleKakaoMap.Place.Owner.PlaceOwner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.ui.Model;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,4 +24,13 @@ public class PlaceMenuService {
         this.placeMenuRepository.save(placeMenu);
     }
 
+    public List<PlaceMenu> findByPlaceOwnerId(Long id){
+        List<PlaceMenu> placeMenuList  =  this.placeMenuRepository.findByPlaceOwner_Id(id);
+        return placeMenuList;
+    }
+
+    public void deletefile(Long id){
+       PlaceMenu placeMenu = this.placeMenuRepository.findById(Math.toIntExact(id)).get();
+       this.placeMenuRepository.delete(placeMenu);
+    }
 }

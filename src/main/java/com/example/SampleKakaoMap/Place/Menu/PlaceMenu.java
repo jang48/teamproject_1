@@ -11,7 +11,7 @@ import lombok.Setter;
 public class PlaceMenu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private String origFileName;   // 파일 원본명
