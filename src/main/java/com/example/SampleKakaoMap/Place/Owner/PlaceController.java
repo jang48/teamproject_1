@@ -5,6 +5,7 @@ import com.example.SampleKakaoMap.Place.Menu.PlaceMenuService;
 import com.example.SampleKakaoMap.Place.Operate.OperateDto;
 import com.example.SampleKakaoMap.Place.Operate.PlaceOperate;
 import com.example.SampleKakaoMap.Place.Operate.PlaceOperateService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.function.IOConsumer;
@@ -52,14 +53,15 @@ public class PlaceController {
     }
 
     @PostMapping("/regist/info/tag")
-    @ResponseBody
+    @ResponseBody   // json형태를 java객체로 쓰겠다는 의미
     public String saveTag(@RequestBody Map<String, Object> requestMap){
 
-        String tag = (String) requestMap.get("tag");
-        String ownerId = (String) requestMap.get("placeOwnerId");
+        System.out.println(requestMap);
+        List<String> tagList = (List<String>) requestMap.get("tagsArray");
+        String placeOwnerId = (String) requestMap.get("placeOwnerId");
 
-
-        return tag;
+        this.placeService.addTag(tagList.get(0),(Long.valueOf(placeOwnerId)));
+        return "{}";
     }
 }
 

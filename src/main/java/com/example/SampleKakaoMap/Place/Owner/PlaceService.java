@@ -26,9 +26,9 @@ public class PlaceService {
     }
 
 
-//    public void addTag(String tag, Long ownerId){
-//        PlaceOwner placeOwner = findById(ownerId);
+    public void addTag(String tag, Long ownerId){
+        PlaceOwner placeOwner = findById(ownerId);
 //        placeOwner.setTag(tag);
-//        this.placeRepository.save(placeOwner);
-//    }
+        this.placeRepository.save(placeOwner);
+    }
 }

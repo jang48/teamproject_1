@@ -2,6 +2,7 @@ package com.example.SampleKakaoMap.Place.Owner;
 
 import com.example.SampleKakaoMap.Place.Menu.PlaceMenu;
 import com.example.SampleKakaoMap.Place.Operate.PlaceOperate;
+import com.example.SampleKakaoMap.Place.Owner.Tag.PlaceTag;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,12 +31,12 @@ public class PlaceOwner {
     private Double longitude;            // 경도
 
     private String callNum;              // 전화번호
-//    private String time;               // 매장 영업시간  >> PlaceOperate 테이블 생성
+//    private String time;               // 매장 영업시간   >> PlaceOperate 테이블 생성
     private String link;                 // 매장 웹사이트
-//    private String menu;               // 매장 메뉴      >> Menu 테이블 생성
+//    private String menu;               // 매장 메뉴       >> Menu 테이블 생성
 //    private String menuImg;            // 메뉴 이미지     >> Menu 테이블 생성
     private String post;                 // 매장 소식 ( ex. Take out 10% 할인 진행합니다 )
-    private String tag;                  // 매장 태그 ( ex. #떡볶이맛집, #배달가능 )
+//    private String tag;                // 매장 태그       >>  PlaceOwnerTag 테이블 생성
 
     @Column(nullable = false)
     private String storeCategory;        // 매장 카테고리 ( ex. 음식점, 카페, 술집, )
@@ -47,6 +48,9 @@ public class PlaceOwner {
 
     @OneToMany(mappedBy = "placeOwner")
     private List<PlaceMenu> placeMenuList;
+
+    @OneToMany(mappedBy = "placeOwner")
+    private List<PlaceTag> tagList;
 
 //    @ManyToOne
 //    private Owner owner;
@@ -68,7 +72,6 @@ public class PlaceOwner {
         dto.setStore(store);
         dto.setStoreAddress(storeAddress);
         dto.setPost(post);
-        dto.setTag(tag);
         dto.setStoreCategory(storeCategory);
         dto.setStoreMemo(storeMemo);
         dto.setStoreImg(storeImg);
