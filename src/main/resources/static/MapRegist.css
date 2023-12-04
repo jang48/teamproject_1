@@ -135,11 +135,10 @@ input::placeholder {color:#d2d2d2;}
 }
 
 .MenuInfoSave{
-    background : #289AFF;
-    color : white;
+    border : 2px solid  #20c997;
+    color : black;
     border-radius: 10px;
-    width : 23%;
-    height : 30px;
+    font-size : 14px;
 }
 
 

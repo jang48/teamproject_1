@@ -14,12 +14,12 @@ public class PlaceMenu {
     private Long id;
 
     @Column(nullable = false)
-    private String origFileName;   // 파일 원본명
+    private String origFileName;       // 파일 원본명
 
     @Column(nullable = false)
-    private String filePath;      // 파일 저장 경로
+    private String filePath;          // 파일 저장 경로
 
-    private String menuName;      // 메뉴 이름
+    private String menuName;         // 메뉴 이름
 
     private String menuPrice;       // 메뉴 가격
 

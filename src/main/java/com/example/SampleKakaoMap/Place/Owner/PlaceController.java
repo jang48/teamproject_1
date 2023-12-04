@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RequiredArgsConstructor
@@ -47,6 +49,17 @@ public class PlaceController {
         model.addAttribute("placeOperateList", placeOperateList);
 
         return "redirect:/place/map/regist/info/" + placeOwner.getId();
+    }
+
+    @PostMapping("/regist/info/tag")
+    @ResponseBody
+    public String saveTag(@RequestBody Map<String, Object> requestMap){
+
+        String tag = (String) requestMap.get("tag");
+        String ownerId = (String) requestMap.get("placeOwnerId");
+
+
+        return tag;
     }
 }
 

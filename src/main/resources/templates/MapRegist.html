@@ -64,6 +64,9 @@
         <div class="addRegist">
             <div class="RegistTitle" style="margin-top : 20px; margin-bottom : 20px;">
                 <a style="font-size : 25px; font-weight : bold; margin-bottom : 10px;">추가 정보</a>
+                <button class="BasicInfoSave" id="AddInfoSave" type="submit" style="margin-left : 58%;"
+                        onclick="doSave(document.getElementById('info'))">저장
+                </button>
             </div>
             <div class="RegistAddContent">
                 <label class="RegistLabel"> 영업시간 </label>
@@ -125,164 +128,201 @@
                     </table>
                 </form>
             </div>
+            <div style="display : grid; margin-top : 3px;">
+                <label class="RegistLabel"> 매장 소식 </label>
+                <input type="text" class="RegistText" id="storeNews" style="width : 100%;" placeholder="ex. Take out 10% 할인 진행합니다." >
+                <label class="RegistLabel"> 매장 태그 </label>
+                <input type="text" class="RegistText" id="storeTag" style="width: 100%;" placeholder="ex. #떡볶이맛집, #배달가능" onkeydown="if (event.key === 'Enter') { addFunc(); }">
+                <input type="hidden" id="token" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1f6119cdfa6fe0122000dfaa0c837e0e&libraries=services"></script>
     <!-- 카카오지도 키워드 검색  -->
     <script th:inline="javascript">
-
-       function doSave(form){
-          form.action = "/place/map/regist/info/save";
-          form.method = "post";
-          form.submit();
-       }
-
-
-      function inputNumberFormat(obj) {
-           obj.value = comma(uncomma(obj.value));
-      }
-
-      function comma(str) {
-          str = String(str);
-          return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-      }
-
-      function uncomma(str) {
-          str = String(str);
-          return str.replace(/[^\d]+/g, '');
-      }
-
-     function previewImage(input) {
-         var preview = document.getElementById('preview');
-         var file = input.files[0];
-
-         if (file) {
-             var reader = new FileReader();
-
-             reader.onload = function(e) {
-                 preview.src = e.target.result;
+        document.addEventListener('keydown', function(event) {
+             if (event.keyCode === 13) {
+               event.preventDefault();
              };
-             reader.readAsDataURL(file);
-         } else {
-             alert("사진을 선택해주세요.");
-             return;
-         }
-     }
+        }, true);
 
-     function menuChk(formClass){
-
-         var radio = document.getElementsByName('fileId');
-         var chk_cnt = 0;
-         var form = document.querySelector(formClass);
-
-         for(var i = 0; i < radio.length; i++){
-            if(radio[i].checked == true) chk_cnt++;
-         }
-
-         if(chk_cnt < 1 ){
-            alert("체크하세요");
-            return;
-         } else {
-
-            form.action = "/place/map/regist/menu/delete";
-            form.method = "post";
-            form.submit();
-         }
-    }
-
-     ////////////////////////////////////////////////  함수 구현  ////////////////////////////////////////////////
-               var autoHypenPhone = function(str){
-                   str = str.replace(/[^0-9]/g, '');
-                   var tmp = '';
-
-                   if( str.length < 4){
-                       return str;
-                   }else if(str.length < 7){
-                       tmp += str.substr(0, 3);
-                       tmp += '-';
-                       tmp += str.substr(3);
-                       return tmp;
-                   }else if(str.length < 11){
-                       tmp += str.substr(0, 3);
-                       tmp += '-';
-                       tmp += str.substr(3, 3);
-                       tmp += '-';
-                       tmp += str.substr(6);
-                       return tmp;
-                   }else{
-                       tmp += str.substr(0, 3);
-                       tmp += '-';
-                       tmp += str.substr(3, 4);
-                       tmp += '-';
-                       tmp += str.substr(7);
-                       return tmp;
-                   }
-
-                   return str;
-               }
+        function doSave(form){
+             form.action = "/place/map/regist/info/save";
+             form.method = "post";
+             form.submit();
+        }
 
 
-              var phoneNum = document.getElementById('phoneNum');
+        function inputNumberFormat(obj) {
+              obj.value = comma(uncomma(obj.value));
+        }
 
-              phoneNum.onkeyup = function(){
-               this.value = autoHypenPhone( this.value ) ;
+        function comma(str) {
+             str = String(str);
+             return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+        }
+
+        function uncomma(str) {
+             str = String(str);
+             return str.replace(/[^\d]+/g, '');
+        }
+
+        function previewImage(input) {
+            var preview = document.getElementById('preview');
+            var file = input.files[0];
+
+            if (file) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("사진을 선택해주세요.");
+                return;
+            }
+        }
+
+        function menuChk(formClass){
+
+            var radio = document.getElementsByName('fileId');
+            var chk_cnt = 0;
+            var form = document.querySelector(formClass);
+
+            for(var i = 0; i < radio.length; i++){
+               if(radio[i].checked == true) chk_cnt++;
+            }
+
+            if(chk_cnt < 1 ){
+               alert("체크하세요");
+               return;
+            } else {
+
+               form.action = "/place/map/regist/menu/delete";
+               form.method = "post";
+               form.submit();
+            }
+        }
+
+        function addFunc() {
+            var tag = document.getElementById('storeTag').value;
+            var token = document.getElementById('token').value;
+            var placeOwnerId = document.getElementById('placeOwnerId').value;
+
+            console.log(tag, placeOwnerId);
+
+            fetch('/place/map/regist/info/tag', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token
+                },
+                body: JSON.stringify({ tag: tag, placeOwnerId : placeOwnerId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('서버 응답:', data);
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+            });
+        }
+
+
+        ////////////////////////////////////////////////  함수 구현  ////////////////////////////////////////////////
+                  var autoHypenPhone = function(str){
+                      str = str.replace(/[^0-9]/g, '');
+                      var tmp = '';
+
+                      if( str.length < 4){
+                          return str;
+                      }else if(str.length < 7){
+                          tmp += str.substr(0, 3);
+                          tmp += '-';
+                          tmp += str.substr(3);
+                          return tmp;
+                      }else if(str.length < 11){
+                          tmp += str.substr(0, 3);
+                          tmp += '-';
+                          tmp += str.substr(3, 3);
+                          tmp += '-';
+                          tmp += str.substr(6);
+                          return tmp;
+                      }else{
+                          tmp += str.substr(0, 3);
+                          tmp += '-';
+                          tmp += str.substr(3, 4);
+                          tmp += '-';
+                          tmp += str.substr(7);
+                          return tmp;
+                      }
+
+                      return str;
+                  }
+
+
+                 var phoneNum = document.getElementById('phoneNum');
+
+                 phoneNum.onkeyup = function(){
+                  this.value = autoHypenPhone( this.value ) ;
+                 }
+
+            ////////////////////////////////////////////////  함수 구현 끝  ///////////////////////////////////////////////////////
+
+
+            ////////////////////////////////////////////////  주소 지도 구현 시작  ////////////////////////////////////////////////
+              var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+              mapOption = {
+                  center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+                  level: 5 // 지도의 확대 레벨
+              };
+
+              //지도를 미리 생성
+              var map = new daum.maps.Map(mapContainer, mapOption);
+              //주소-좌표 변환 객체를 생성
+              var geocoder = new daum.maps.services.Geocoder();
+              //마커를 미리 생성
+              var marker = new daum.maps.Marker({
+                  position: new daum.maps.LatLng(37.537187, 127.005476),
+                  map: map
+              });
+
+
+              function address_execDaumPostcode() {
+                  new daum.Postcode({
+                      oncomplete: function(data) {
+                          var addr = data.address; // 최종 주소 변수
+
+                          // 주소 정보를 해당 필드에 넣는다.
+                          document.getElementById("address").value = addr;
+
+                          // 주소로 상세 정보를 검색
+                          geocoder.addressSearch(data.address, function(results, status) {
+                              // 정상적으로 검색이 완료됐으면
+                              if (status === daum.maps.services.Status.OK) {
+
+                                  var result = results[0]; //첫번째 결과의 값을 활용
+
+                                  // 해당 주소에 대한 좌표를 받아서
+                                  var coords = new daum.maps.LatLng(result.y, result.x);
+                                  // 지도를 보여준다.
+                                  map.relayout();
+                                  // 지도 중심을 변경한다.
+                                  map.setCenter(coords);
+                                  // 마커를 결과값으로 받은 위치로 옮긴다.
+                                  marker.setPosition(coords)
+
+                                  document.getElementById("latitude").value = result.y;
+                                  document.getElementById("longitude").value = result.x;
+
+                              }
+                          });
+                      }
+                  }).open();
               }
-
-         ////////////////////////////////////////////////  함수 구현 끝  ///////////////////////////////////////////////////////
-
-
-         ////////////////////////////////////////////////  주소 지도 구현 시작  ////////////////////////////////////////////////
-           var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-           mapOption = {
-               center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-               level: 5 // 지도의 확대 레벨
-           };
-
-           //지도를 미리 생성
-           var map = new daum.maps.Map(mapContainer, mapOption);
-           //주소-좌표 변환 객체를 생성
-           var geocoder = new daum.maps.services.Geocoder();
-           //마커를 미리 생성
-           var marker = new daum.maps.Marker({
-               position: new daum.maps.LatLng(37.537187, 127.005476),
-               map: map
-           });
-
-
-           function address_execDaumPostcode() {
-               new daum.Postcode({
-                   oncomplete: function(data) {
-                       var addr = data.address; // 최종 주소 변수
-
-                       // 주소 정보를 해당 필드에 넣는다.
-                       document.getElementById("address").value = addr;
-
-                       // 주소로 상세 정보를 검색
-                       geocoder.addressSearch(data.address, function(results, status) {
-                           // 정상적으로 검색이 완료됐으면
-                           if (status === daum.maps.services.Status.OK) {
-
-                               var result = results[0]; //첫번째 결과의 값을 활용
-
-                               // 해당 주소에 대한 좌표를 받아서
-                               var coords = new daum.maps.LatLng(result.y, result.x);
-                               // 지도를 보여준다.
-                               map.relayout();
-                               // 지도 중심을 변경한다.
-                               map.setCenter(coords);
-                               // 마커를 결과값으로 받은 위치로 옮긴다.
-                               marker.setPosition(coords)
-
-                               document.getElementById("latitude").value = result.y;
-                               document.getElementById("longitude").value = result.x;
-
-                           }
-                       });
-                   }
-               }).open();
-           }
-          ////////////////////////////////////////////////  주소 지도 구현 끝  ////////////////////////////////////////////////
+             ////////////////////////////////////////////////  주소 지도 구현 끝  ////////////////////////////////////////////////
 
 
 
