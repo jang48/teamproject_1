@@ -185,3 +185,12 @@ input::placeholder {color:#d2d2d2;}
     margin-left : 5px;
     height : 34px;
 }
+
+.tagLayout {
+     color: black;
+     background-color: #D3D3D3;
+     margin : 4px;
+     border-radius: 3px;
+     padding : 1px;
+     cursor : pointer;
+}

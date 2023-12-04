@@ -4,6 +4,8 @@ import com.example.SampleKakaoMap.Place.Menu.PlaceMenuService;
 import com.example.SampleKakaoMap.Place.Owner.PlaceOwner;
 import com.example.SampleKakaoMap.Place.Owner.PlaceOwnerDto;
 import com.example.SampleKakaoMap.Place.Owner.PlaceService;
+import com.example.SampleKakaoMap.Place.Owner.Tag.PlaceTag;
+import com.example.SampleKakaoMap.Place.Owner.Tag.PlaceTagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +19,8 @@ import java.util.List;
 public class PlaceOperateController {
 
     private final PlaceOperateService placeOperateService;
-    private final OperateDto operateDto2;
-    private final PlaceMenuService placeMenuService;
     private final PlaceService placeService;
+    private final PlaceTagService placeTagService;
 
     @GetMapping("/regist/owner")
     public String regist2() {
@@ -49,6 +50,14 @@ public class PlaceOperateController {
         Long ownerId = placeOwner.getId();
         List<OperateDto> operateDtoList = placeOperateService.getAllOperateDtoList(ownerId);
         model.addAttribute("placeOperateList", operateDtoList);
+
+
+        List<PlaceTag> tagList = this.placeTagService.findTags(id);
+        if(tagList.isEmpty()){
+            model.addAttribute("TagList",null);
+        } else {
+            model.addAttribute("TagList",tagList);
+        }
 
 
 //        List<PlaceOperate> placeOperateList = this.placeOperateService.getAllOperateList(Math.toIntExact(placeOwner.getId()));

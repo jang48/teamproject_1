@@ -5,6 +5,8 @@ import com.example.SampleKakaoMap.Place.Menu.PlaceMenuService;
 import com.example.SampleKakaoMap.Place.Operate.OperateDto;
 import com.example.SampleKakaoMap.Place.Operate.PlaceOperate;
 import com.example.SampleKakaoMap.Place.Operate.PlaceOperateService;
+import com.example.SampleKakaoMap.Place.Owner.Tag.PlaceTag;
+import com.example.SampleKakaoMap.Place.Owner.Tag.PlaceTagService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class PlaceController {
 
     private final PlaceOperateService placeOperateService;
     private final PlaceService placeService;
+    private final PlaceTagService placeTagService;
 
     @GetMapping("/regist")
     public String regist(Model model) {
@@ -60,8 +63,13 @@ public class PlaceController {
         List<String> tagList = (List<String>) requestMap.get("tagsArray");
         String placeOwnerId = (String) requestMap.get("placeOwnerId");
 
-        this.placeService.addTag(tagList.get(0),(Long.valueOf(placeOwnerId)));
+        for(String tag : tagList){
+            this.placeTagService.saveTag(tag,(Long.valueOf(placeOwnerId)));
+        }
+
         return "{}";
     }
+
+
 }
 
