@@ -55,6 +55,14 @@ public class PlaceController {
         return "redirect:/place/map/regist/info/" + placeOwner.getId();
     }
 
+    @PostMapping("/regist/info/subSave")
+    public  String saveTag(@RequestParam String webSite, @RequestParam String storeMemo, @RequestParam Long placeId){
+
+        this.placeService.saveSubInfo(webSite,storeMemo,placeId);
+
+        return "redirect:/place/map/regist/info/" + placeId;
+    }
+
     @PostMapping("/regist/info/tag")
     @ResponseBody   // json형태를 java객체로 쓰겠다는 의미
     public  Map<String, String> saveTag(@RequestBody Map<String, Object> requestMap){
@@ -70,5 +78,6 @@ public class PlaceController {
         response.put("redirectUrl", "/place/map/regist/info/" + Long.valueOf(placeOwnerId));
         return response;
     }
+
 }
 

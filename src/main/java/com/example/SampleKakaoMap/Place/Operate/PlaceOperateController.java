@@ -1,5 +1,6 @@
 package com.example.SampleKakaoMap.Place.Operate;
 
+import com.example.SampleKakaoMap.Place.Menu.PlaceMenu;
 import com.example.SampleKakaoMap.Place.Menu.PlaceMenuService;
 import com.example.SampleKakaoMap.Place.Owner.PlaceOwner;
 import com.example.SampleKakaoMap.Place.Owner.PlaceOwnerDto;
@@ -21,6 +22,7 @@ public class PlaceOperateController {
     private final PlaceOperateService placeOperateService;
     private final PlaceService placeService;
     private final PlaceTagService placeTagService;
+    private final PlaceMenuService placeMenuService;
 
     @GetMapping("/regist/owner")
     public String regist2() {
@@ -46,19 +48,16 @@ public class PlaceOperateController {
         PlaceOwnerDto placeOwnerDto = placeOwner.convertDto();
         model.addAttribute("placeOwner", placeOwnerDto);
 
-
         Long ownerId = placeOwner.getId();
         List<OperateDto> operateDtoList = placeOperateService.getAllOperateDtoList(ownerId);
         model.addAttribute("placeOperateList", operateDtoList);
 
+        List<PlaceMenu> placeMenuList  =  this.placeMenuService.findByPlaceOwnerId(id);
+        model.addAttribute("menus", placeMenuList);
+
 
         List<PlaceTag> tagList = this.placeTagService.findTags(id);
-        if(tagList.isEmpty()){
-            model.addAttribute("TagList",null);
-        } else {
-            model.addAttribute("TagList",tagList);
-        }
-
+        model.addAttribute("TagList",tagList);
 
 //        List<PlaceOperate> placeOperateList = this.placeOperateService.getAllOperateList(Math.toIntExact(placeOwner.getId()));
 //        model.addAttribute("placeOperateList", placeOperateList);

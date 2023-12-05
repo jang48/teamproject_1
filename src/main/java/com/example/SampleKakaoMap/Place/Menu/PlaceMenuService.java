@@ -29,8 +29,13 @@ public class PlaceMenuService {
         return placeMenuList;
     }
 
-    public void deletefile(Long id){
+    public void deleteFile(Long id){
        PlaceMenu placeMenu = this.placeMenuRepository.findById(Math.toIntExact(id)).get();
        this.placeMenuRepository.delete(placeMenu);
+    }
+
+    public String findFile(Long id){
+        PlaceMenu placeMenu = this.placeMenuRepository.findById(Math.toIntExact(id)).get();
+        return placeMenu.getOrigFileName();
     }
 }
