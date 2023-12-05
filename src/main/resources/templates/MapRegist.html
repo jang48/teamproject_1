@@ -61,7 +61,7 @@
                 </div>
             </form>
         </div>
-        <div class="addRegist" style="overflow : auto;">
+        <div class="addRegist" style="overflow : auto; width : 38%;">
             <div class="RegistTitle" style="margin-top : 20px; margin-bottom : 20px;">
                 <a style="font-size : 25px; font-weight : bold; margin-bottom : 10px;">추가 정보</a>
                 <button class="BasicInfoSave" id="AddInfoSave" type="submit" style="margin-left : 58%;"
@@ -140,7 +140,7 @@
                 </div>
                 <p style="color : red ; margin-left : 10px; border : none; font-size : 11px; margin-top : -10px;">작성 후 Enter키 누르면 태그 생성 및 태그 클릭하여 삭제</p>
                 <div style="display: flex;">
-                    <div id="wordContainer" th:each="TagList : ${TagList}" th:if="${TagList != null}" >
+                    <div id="wordContainer" >
                             <span class="tagLayout" th:each="Tag : ${TagList}" th:if="${TagList != null}" >
                                 <span style="border: none; margin-right: 5px; " th:text="${Tag.tag}"  ></span>
                             </span>
@@ -230,12 +230,12 @@
 
             tagText.className = 'tags';
             tagText.innerText =  tag;
-            wordContainer.appendChild(tagText);
 
-            if (existingTagText) {
-                existingTagText.innerText += tag;
-            } else {
+            if (wordContainer) {
                 wordContainer.appendChild(tagText);
+            }
+            else if (existingTagText) {
+                existingTagText.innerText += tag;
             }
 
             tagText.addEventListener('click', function () {
@@ -251,7 +251,6 @@
         function saveTags(){
             var token = document.getElementById('token').value;
             var placeOwnerId = document.getElementById('placeOwnerId').value;
-            console.log(placeOwnerId);
 
             fetch('/place/map/regist/info/tag', {
                 method: 'POST',
@@ -261,14 +260,18 @@
                 },
                 body: JSON.stringify({ tagsArray: tagsArray, placeOwnerId: placeOwnerId }),
             })
-            .then(response => response.json())
+            .then(response => {
+                return response.json();
+            })
             .then(data => {
-                displayTags(tags);
+                console.log('서버 응답:', data);
+                window.location.href = '/place/map/regist/info/'+ placeOwnerId ;
             })
             .catch(error => {
                 console.error('에러 발생:', error);
             });
         }
+
 
         function displayTags(tags) {
             var wordContainer = document.getElementById('wordContainer');

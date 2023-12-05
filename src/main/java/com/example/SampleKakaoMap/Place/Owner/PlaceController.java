@@ -57,9 +57,8 @@ public class PlaceController {
 
     @PostMapping("/regist/info/tag")
     @ResponseBody   // json형태를 java객체로 쓰겠다는 의미
-    public String saveTag(@RequestBody Map<String, Object> requestMap){
+    public  Map<String, String> saveTag(@RequestBody Map<String, Object> requestMap){
 
-        System.out.println(requestMap);
         List<String> tagList = (List<String>) requestMap.get("tagsArray");
         String placeOwnerId = (String) requestMap.get("placeOwnerId");
 
@@ -67,9 +66,9 @@ public class PlaceController {
             this.placeTagService.saveTag(tag,(Long.valueOf(placeOwnerId)));
         }
 
-        return "{}";
+        Map<String, String> response = new HashMap<>();
+        response.put("redirectUrl", "/place/map/regist/info/" + Long.valueOf(placeOwnerId));
+        return response;
     }
-
-
 }
 
